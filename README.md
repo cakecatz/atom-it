@@ -1,5 +1,20 @@
-# atom-it package
+# Atom it
 
-A short description of your package.
+## Install
 
-![A screenshot of your package](https://f.cloud.github.com/assets/69169/2290250/c35d867a-a017-11e3-86be-cd7c5bf3ff9b.gif)
+```bash
+apm install cakecatz/atom-it
+cd ~/.atom/packages/atom-it
+npm install -g .
+```
+
+## Usage
+
+```bash
+cd your-project-folder
+atom-it . # add your-project-folder into current Atom window
+```
+
+## LICENSE
+
+MIT
