@@ -1,0 +1,24 @@
+{
+  "name": "atom-it",
+  "main": "./lib/atom-it",
+  "version": "0.0.0",
+  "description": "A short description of your package",
+  "keywords": [],
+  "bin": "./lib/atom-it-cli.js",
+  "scripts": {
+    "compile": "babel ./src -d ./lib"
+  },
+  "repository": "https://github.com/atom/atom-it",
+  "license": "MIT",
+  "engines": {
+    "atom": ">=1.0.0 <2.0.0"
+  },
+  "dependencies": {
+    "querystring": "^0.2.0",
+    "request": "^2.64.0",
+    "yargs": "^3.26.0"
+  },
+  "devDependencies": {
+    "babel": "^5.8.23"
+  }
+}
