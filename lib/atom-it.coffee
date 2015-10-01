@@ -1,16 +1,18 @@
-{CompositeDisposable} = require 'atom'
 http = require 'http'
 qs = require 'querystring'
 
 module.exports = AtomIt =
-  atomItView: null
-  modalPanel: null
-  subscriptions: null
+  server_port: 12345
 
   activate: (state) ->
-    console.log 'hello'
+    @createServer()
+    @startServer()
 
-    server = http.createServer (req, res) =>
+  deactivate: ->
+    @server.close()
+
+  createServer: ->
+    @server = http.createServer (req, res) =>
       body = ''
       req.on 'data', (data) ->
         body += data
@@ -18,29 +20,19 @@ module.exports = AtomIt =
       req.on 'end', =>
         @addDirectory qs.parse(body).dir
 
-      res.end('hello world')
-    server.listen 12345
-    # @atomItView = new AtomItView(state.atomItViewState)
-    # @modalPanel = atom.workspace.addModalPanel(item: @atomItView.getElement(), visible: false)
+      res.end('1')
 
-    # Events subscribed to in atom's system can be easily cleaned up with a CompositeDisposable
-    @subscriptions = new CompositeDisposable
-
-    # Register command that toggles this view
-    @subscriptions.add atom.commands.add 'atom-workspace', 'atom-it:toggle': => @toggle()
-
-  deactivate: ->
-    @subscriptions.dispose()
+  startServer: ->
+    @server.listen @server_port
 
   addDirectory: (dir) ->
     opendProjects = atom.project.getPaths()
     isOpend = false
+
     opendProjects.forEach (project) ->
-      isOpend = true if project.indexOf(dir) >= 0
-      isOpend = true if dir.indexOf(project) >= 0
+      isOpend = true if project is dir
 
     unless isOpend
       atom.project.addPath dir
-
-  toggle: ->
-    console.log 'AtomIt was toggled!'
+    else
+      atom.project.removePath dir
